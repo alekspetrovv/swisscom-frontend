@@ -1,0 +1,22 @@
+.owner-form .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+.owner-form .form-group label {
+  margin-bottom: 4px;
+  font-weight: normal;
+  font-size: 0.9em;
+}
+.owner-form .form-control-inline {
+  width: 95%;
+}
+.owner-form .form-actions-inline {
+  text-align:left;
+  padding-top: 10px;
+}
+.owner-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

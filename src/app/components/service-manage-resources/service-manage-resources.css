@@ -1,0 +1,267 @@
+.container {
+  padding: 20px;
+  max-width: 900px;
+  margin: auto;
+}
+h2 {
+  color: #333;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 5px;
+  font-size: 1.8em;
+}
+.text-muted.small {
+  font-size: 0.8em;
+  color: #6c757d;
+  margin-bottom: 20px;
+}
+hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 0;
+  border-top: 1px solid #eee;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  margin-top: 20px;
+}
+.section-header h3 {
+  font-size: 1.4em;
+  color: #0056b3;
+  margin: 0;
+}
+
+.button-add-item,
+.button-add-resource {
+  padding: 8px 12px;
+  cursor: pointer;
+  border: 1px solid #28a745;
+  background-color: #28a745;
+  color: white;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+.button-add-item:hover:not(:disabled),
+.button-add-resource:hover:not(:disabled) {
+  background-color: #218838;
+  border-color: #1e7e34;
+}
+.button-add-item:disabled,
+.button-add-resource:disabled {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  opacity: 0.65;
+}
+
+.item-add-form-section,
+.inline-form-section {
+  padding: 15px;
+  border: 1px dashed #007bff;
+  border-radius: 5px;
+  margin: 15px 0;
+  background-color: #f8f9fa;
+}
+.item-add-form-section h4 {
+  margin-top: 0;
+  color: #0056b3;
+  font-size: 1.1em;
+  margin-bottom: 15px;
+}
+
+.inline-edit-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-grow: 1;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.inline-edit-input,
+.form-control-inline {
+  flex-grow: 1;
+  padding: 8px 10px;
+  font-size: 1em;
+  border: 1px solid #999;
+  border-radius: 4px;
+  min-width: 200px;
+  box-sizing: border-box;
+}
+.form-group-inline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-grow: 1;
+}
+.form-group-inline label {
+  margin-bottom: 0;
+  font-weight: bold;
+  color: #495057;
+  flex-shrink: 0;
+}
+.form-actions-inline {
+  margin-top: 0;
+  text-align: right;
+  flex-shrink: 0;
+}
+.form-actions-inline .button-small {
+  margin-left: 8px;
+}
+
+.inline-error {
+  color: #dc3545;
+  font-size: 0.8em;
+  width: 100%;
+  margin-top: 4px;
+  flex-basis: 100%;
+  text-align: left;
+}
+
+.item-list {
+  list-style-type: none;
+  padding: 0;
+}
+.list-item {
+  background-color: #fff;
+  border: 1px solid #eee;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.owner-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.item-info {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+.item-info h3 {
+  margin-top: 0;
+  margin-bottom: 5px;
+  font-size: 1.1em;
+}
+.item-info h4 {
+  margin-top: 0;
+  margin-bottom: 5px;
+  font-size: 1.05em;
+  color: #333;
+}
+.item-info p {
+  margin: 2px 0;
+}
+
+
+.actions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.actions .button-small {
+  margin-left: 8px;
+  padding: 6px 10px;
+  font-size: 0.85em;
+  border: 1px solid #ccc;
+  background-color: #f8f9fa;
+  color: #333;
+}
+.actions .button-small:hover:not(:disabled) {
+  background-color: #e2e6ea;
+}
+.actions .button-small:disabled {
+  opacity: 0.65;
+}
+
+button {
+  margin: 0 5px 5px 0;
+  padding: 8px 12px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+}
+button:hover:not(:disabled) {
+  background-color: #e0e0e0;
+}
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.button-save {
+  background-color: #28a745;
+  color: white;
+  border: none;
+}
+.button-cancel {
+  background-color: #ffc107;
+  color: #212529;
+  border: none;
+}
+.delete-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+}
+.button-manage-owners {
+  border: 1px solid #6c757d;
+  color: #6c757d;
+  background-color: transparent;
+}
+.button-manage-owners:hover:not(:disabled) {
+  background-color: #6c757d;
+  color: white;
+}
+.button-secondary {
+  background-color: #6c757d;
+  color: white;
+  border-color: #6c757d;
+}
+
+
+.loading-message,
+.empty-message,
+.error-message,
+.error-message.global-error {
+  margin-top: 15px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-align: center;
+}
+.error-message,
+.error-message.global-error {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+.empty-message {
+  color: #0c5460;
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+}
+.loading-message {
+  color: #004085;
+  background-color: #cce5ff;
+  border-color: #b8daff;
+}
+.button-retry-small {
+  font-size: 0.8em;
+  padding: 4px 8px;
+  margin-left: 10px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+}

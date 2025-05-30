@@ -1,0 +1,139 @@
+<div class="container">
+  @if (isLoadingParentService || isLoadingParentResource) {
+    <p class="loading-message">Loading parent information...</p>
+  } @else if (parentService && parentResource) {
+    <h2>View/Manage Owners</h2>
+    <p class="text-muted medium">Service: {{ parentService.name }}</p>
+    <p class="text-muted medium">Resource: {{ parentResource.name }}</p>
+  } @else if (parentDataErrorMessage) {
+    <div class="error-message">{{ parentDataErrorMessage }}</div>
+    <button type="button" (click)="goBackToManageResources()" class="button-secondary">Back to View/Manage Resources</button>
+  } @else {
+    <p class="empty-message">Parent service or resource details could not be loaded.</p>
+    <button type="button" (click)="goBackToManageResources()" class="button-secondary">Back to View/Manage Resources</button>
+  }
+
+  @if (parentService && parentResource) {
+    <hr>
+    <div class="section-header">
+      @if (!isAddingOwner && !editingOwnerId) {
+        <button type="button" (click)="startAddOwner()" class="button-add-item">
+          + Add New Owner
+        </button>
+      }
+    </div>
+
+    @if (isAddingOwner) {
+      <div class="item-add-form-section">
+        <h4>Add New Owner</h4>
+        <form [formGroup]="addOwnerForm" (ngSubmit)="saveNewOwner()" class="owner-form">
+          <div class="form-group">
+            <label for="newOwnerNameRmo">Name:</label>
+            <input id="newOwnerNameRmo" type="text" formControlName="name" class="form-control-inline" autofocus>
+            @if (addOwnerForm.get('name')?.invalid && addOwnerForm.get('name')?.touched) {
+              <div class="inline-error">@if (addOwnerForm.get('name')?.errors?.['required']) { <small>Name required.</small> }</div>
+            }
+          </div>
+          <div class="form-group">
+            <label for="newOwnerAccountRmo">Account Number:</label>
+            <input id="newOwnerAccountRmo" type="text" formControlName="accountNumber" class="form-control-inline">
+            @if (addOwnerForm.get('accountNumber')?.invalid && addOwnerForm.get('accountNumber')?.touched) {
+              <div class="inline-error">@if (addOwnerForm.get('accountNumber')?.errors?.['required']) { <small>Account # required.</small> }</div>
+            }
+          </div>
+          <div class="form-group">
+            <label for="newOwnerLevelRmo">Level:</label>
+            <input id="newOwnerLevelRmo" type="number" formControlName="level" class="form-control-inline">
+            @if (addOwnerForm.get('level')?.invalid && addOwnerForm.get('level')?.touched) {
+              <div class="inline-error">
+                @if (addOwnerForm.get('level')?.errors?.['required']) { <small>Level required.</small> }
+                @if (addOwnerForm.get('level')?.errors?.['min']) { <small>Min 1.</small> }
+              </div>
+            }
+          </div>
+          <div class="form-actions-inline">
+            <button type="submit" [disabled]="addOwnerForm.invalid || isSubmittingAddOwner" class="button-small button-save">
+              {{ isSubmittingAddOwner ? 'Saving...' : 'Save Owner' }}
+            </button>
+            <button type="button" (click)="cancelAddOwner()" [disabled]="isSubmittingAddOwner" class="button-small button-cancel">
+              Cancel
+            </button>
+          </div>
+        </form>
+        @if (ownersErrorMessage && isAddingOwner) {
+          <div class="error-message global-error">{{ ownersErrorMessage }}</div>
+        }
+      </div>
+    }
+
+    @if (isLoadingOwners && !isAddingOwner) {
+      <p class="loading-message">Loading owners...</p>
+    } @else if (ownersErrorMessage && !isAddingOwner && !editingOwnerId) {
+      <div class="error-message">
+        {{ ownersErrorMessage }}
+        <button type="button" (click)="loadOwners()" class="button-retry-small">Retry</button>
+      </div>
+    } @else if (owners && owners.length > 0) {
+      <ul class="item-list">
+        @for (owner of owners; track owner.id) {
+          <li class="list-item owner-item">
+            @if (editingOwnerId === owner.id) {
+              <form [formGroup]="editOwnerForm" (ngSubmit)="saveOwnerEdit()" class="owner-form inline-edit-form full-width-form">
+                <div class="form-group">
+                  <label for="editOwnerName-{{owner.id}}">Name:</label>
+                  <input id="editOwnerName-{{owner.id}}" type="text" formControlName="name" class="form-control-inline" autofocus>
+                  @if (editOwnerForm.get('name')?.invalid && editOwnerForm.get('name')?.touched) {
+                    <div class="inline-error">@if (editOwnerForm.get('name')?.errors?.['required']) { <small>Name required.</small> }</div>
+                  }
+                </div>
+                <div class="form-group">
+                  <label for="editOwnerAccount-{{owner.id}}">Account Number:</label>
+                  <input id="editOwnerAccount-{{owner.id}}" type="text" formControlName="accountNumber" class="form-control-inline">
+                  @if (editOwnerForm.get('accountNumber')?.invalid && editOwnerForm.get('accountNumber')?.touched) {
+                    <div class="inline-error">@if (editOwnerForm.get('accountNumber')?.errors?.['required']) { <small>Account # required.</small> }</div>
+                  }
+                </div>
+                <div class="form-group">
+                  <label for="editOwnerLevel-{{owner.id}}">Level:</label>
+                  <input id="editOwnerLevel-{{owner.id}}" type="number" formControlName="level" class="form-control-inline">
+                  @if (editOwnerForm.get('level')?.invalid && editOwnerForm.get('level')?.touched) {
+                    <div class="inline-error">
+                      @if (editOwnerForm.get('level')?.errors?.['required']) { <small>Level required.</small> }
+                      @if (editOwnerForm.get('level')?.errors?.['min']) { <small>Min 1.</small> }
+                    </div>
+                  }
+                </div>
+                <div class="form-actions-inline">
+                  <button type="submit" [disabled]="editOwnerForm.invalid || isSubmittingEditOwner" class="button-small button-save">
+                    {{ isSubmittingEditOwner ? 'Saving...' : 'Save Changes' }}
+                  </button>
+                  <button type="button" (click)="cancelEditOwner()" [disabled]="isSubmittingEditOwner" class="button-small button-cancel">Cancel</button>
+                </div>
+              </form>
+              @if (ownersErrorMessage && editingOwnerId === owner.id) {
+                <div class="error-message global-error item-error">{{ ownersErrorMessage }}</div>
+              }
+            } @else {
+              <div class="item-info">
+                <h4>{{ owner.name || 'Unnamed Owner' }}</h4>
+                <p class="text-muted medium">Account: {{ owner.accountNumber }} | Level: {{ owner.level }}</p>
+              </div>
+              <div class="actions">
+                <button (click)="startEditOwner(owner)" class="button-small" [disabled]="isAddingOwner || !!editingOwnerId">Edit</button>
+                <button (click)="deleteOwner(owner)" class="button-small delete-button" [disabled]="isAddingOwner || !!editingOwnerId || isDeletingOwner(owner.id!)">
+                  {{ isDeletingOwner(owner.id!) ? 'Deleting...' : 'Delete' }}
+                </button>
+              </div>
+            }
+          </li>
+        }
+      </ul>
+    } @else if (!isLoadingOwners && !ownersErrorMessage && !isAddingOwner && !editingOwnerId) {
+      <p class="empty-message">No owners for this resource. Click '+ Add New Owner'.</p>
+    }
+  } @else if (!isLoadingParentService && !isLoadingParentResource && !parentService && !parentResource && !parentDataErrorMessage) {
+    <p>Cannot manage owners as parent service or resource details could not be loaded.</p>
+  }
+  <hr>
+  <button type="button" (click)="goBackToManageResources()" class="button-secondary">Back to View/Manage Resources</button>
+</div>

@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="section-header"> <h2>View/Manage Services</h2>
+    @if (!isAddingService && !editingServiceId) {
+      <button type="button" (click)="startAddService()" class="button-add-item"> + Create New Service
+      </button>
+    }
+  </div>
+
+  @if (isAddingService) {
+    <div class="item-add-form-section"> <h4>New Service</h4>
+      <form [formGroup]="addServiceForm" (ngSubmit)="saveNewService()" class="inline-edit-form"> <input type="text" formControlName="name" class="inline-edit-input" autofocus placeholder="Service Name">
+        <button type="submit" [disabled]="addServiceForm.invalid || isSubmittingAdd" class="button-small button-save">
+          {{ isSubmittingAdd ? 'Creating...' : 'Create' }}
+        </button>
+        <button type="button" (click)="cancelAddService()" [disabled]="isSubmittingAdd" class="button-small button-cancel">
+          Cancel
+        </button>
+        @if (addServiceForm.get('name')?.invalid && addServiceForm.get('name')?.touched) {
+          <div class="inline-error">
+            @if (addServiceForm.get('name')?.errors?.['required']) { <small>Name is required.</small> }
+            @if (addServiceForm.get('name')?.errors?.['minlength']) { <small>Min 3 chars.</small> }
+            @if (addServiceForm.get('name')?.errors?.['maxlength']) { <small>Max 100 chars.</small> }
+          </div>
+        }
+      </form>
+      @if (errorMessage && isAddingService) { <div class="error-message global-error">{{ errorMessage }}</div>
+      }
+    </div>
+  }
+
+  @if (isLoading && !isAddingService) { <p class="loading-message">Loading services...</p>
+  } @else if (errorMessage && (!services || services.length === 0) && !isAddingService && !editingServiceId) {
+    <div class="error-message">Error: {{ errorMessage }}</div>
+  } @else if ((!services || services.length === 0) && !isAddingService && !editingServiceId) {
+    <div class="empty-message">No services found. Try creating one!</div>
+  } @else if (services && services.length > 0) {
+    <ul class="service-list"> @for (service of services; track service.id) {
+      <li class="service-item"> @if (editingServiceId === service.id) {
+        <form [formGroup]="serviceNameEditForm" (ngSubmit)="saveServiceName(service)" class="inline-edit-form">
+          <input type="text" formControlName="name" class="inline-edit-input" autofocus>
+          <button type="submit" [disabled]="serviceNameEditForm.invalid || isSubmittingEdit" class="button-small button-save">
+            {{ isSubmittingEdit ? 'Saving...' : 'Save' }}
+          </button>
+          <button type="button" (click)="cancelEditServiceName()" [disabled]="isSubmittingEdit" class="button-small button-cancel">Cancel</button>
+          @if (serviceNameEditForm.get('name')?.invalid && serviceNameEditForm.get('name')?.touched) {
+            <div class="inline-error">
+              @if (serviceNameEditForm.get('name')?.errors?.['required']) { <small>Name is required.</small> }
+              @if (serviceNameEditForm.get('name')?.errors?.['minlength']) { <small>Min 3 chars.</small> }
+              @if (serviceNameEditForm.get('name')?.errors?.['maxlength']) { <small>Max 100 chars.</small> }
+            </div>
+          }
+        </form>
+        @if (errorMessage && editingServiceId === service.id) { <div class="error-message global-error item-error" style="width:100%">{{ errorMessage }}</div>
+        }
+      } @else {
+        <div class="service-info"> <h3>{{ service.name  }}</h3>
+        </div>
+        <div class="actions">
+          <button (click)="startEditServiceName(service)" class="button-small" [disabled]="isAddingService || !!editingServiceId">Edit Name</button>
+          <button (click)="manageResources(service.id)" class="button-small" [disabled]="isAddingService || !!editingServiceId">View/Manage Resources</button>
+          <button (click)="confirmDelete(service.id)" class="button-small delete-button" [disabled]="isAddingService || !!editingServiceId || isDeleting(service.id)">
+            {{ isDeleting(service.id) ? 'Deleting...' : 'Delete' }}
+          </button>
+        </div>
+      }
+      </li>
+    }
+    </ul>
+    @if (errorMessage && !editingServiceId && !isAddingService && services && services.length > 0) {
+      <div class="error-message global-error">{{ errorMessage }}</div>
+    }
+  }
+</div>

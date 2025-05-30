@@ -1,0 +1,118 @@
+<div class="container">
+    @if (isLoadingService) {
+        <p class="loading-message">Loading service information...</p>
+    }
+    @if (!isLoadingService && parentService) {
+        <h2>View/Manage Resources</h2>
+        <p class="text-muted medium">Service: {{ parentService.name }}</p>
+    }
+    @if (!isLoadingService && !parentService && serviceErrorMessage) {
+        <div class="error-message">{{ serviceErrorMessage }}</div>
+    }
+    @if (!isLoadingService && !parentService && !serviceErrorMessage) {
+        <p class="empty-message">Parent service details could not be loaded or Service ID is missing.</p>
+    }
+
+    @if (parentService) {
+        <hr>
+        <div class="section-header">
+            @if (!isAddingResource && !editingResourceId) {
+                <button type="button" (click)="startAddResource()" class="button-add-resource">
+                    + Add New Resource
+                </button>
+            }
+        </div>
+
+        @if (isAddingResource) {
+            <div class="inline-form-section item-add-form-section">
+                <h4>Add New Resource</h4>
+                <form [formGroup]="addResourceForm" (ngSubmit)="saveNewResource()" class="inline-edit-form">
+                    <div class="form-group-inline">
+                        <label for="newResourceNameSmr">Name:</label>
+                        <input id="newResourceNameSmr" type="text" formControlName="name" class="form-control-inline" autofocus>
+                    </div>
+                    <div class="form-actions-inline">
+                        <button type="submit" [disabled]="addResourceForm.invalid || isSubmittingAddResource" class="button-small button-save">
+                            {{ isSubmittingAddResource ? 'Saving...' : 'Save Resource' }}
+                        </button>
+                        <button type="button" (click)="cancelAddResource()" [disabled]="isSubmittingAddResource" class="button-small button-cancel">
+                            Cancel
+                        </button>
+                    </div>
+                    @if (addResourceForm.get('name')?.invalid && addResourceForm.get('name')?.touched) {
+                        <div class="inline-error">
+                            @if (addResourceForm.get('name')?.errors?.['required']) { <small>Name is required.</small> }
+                            @if (addResourceForm.get('name')?.errors?.['minlength']) { <small>Min 3 chars.</small> }
+                            @if (addResourceForm.get('name')?.errors?.['maxlength']) { <small>Max 100 chars.</small> }
+                        </div>
+                    }
+                </form>
+                @if (resourcesErrorMessage && isAddingResource) {
+                    <div class="error-message global-error">{{ resourcesErrorMessage }}</div>
+                }
+            </div>
+        }
+
+        @if (!isAddingResource) {
+            @if (isLoadingResources) {
+                <p class="loading-message">Loading resources...</p>
+            }
+            @if (!isLoadingResources && resourcesErrorMessage && !editingResourceId) {
+                <div class="error-message">
+                    {{ resourcesErrorMessage }}
+                    <button type="button" (click)="loadResources()" class="button-retry-small">Retry</button>
+                </div>
+            }
+            @if (!isLoadingResources && !resourcesErrorMessage && resources && resources.length > 0) {
+                <ul class="item-list">
+                    @for (resource of resources; track resource.id) {
+                        <li class="list-item">
+                            @if (editingResourceId === resource.id) {
+                                <form [formGroup]="editResourceForm" (ngSubmit)="saveResourceName()" class="inline-edit-form">
+                                    <input type="text" formControlName="name" class="inline-edit-input" autofocus>
+                                    <button type="submit" [disabled]="editResourceForm.invalid || isSubmittingEditResource" class="button-small button-save">
+                                        {{ isSubmittingEditResource ? 'Saving...' : 'Save Name' }}
+                                    </button>
+                                    <button type="button" (click)="cancelEditResourceName()" [disabled]="isSubmittingEditResource" class="button-small button-cancel">
+                                        Cancel
+                                    </button>
+                                    @if (editResourceForm.get('name')?.invalid && editResourceForm.get('name')?.touched) {
+                                        <div class="inline-error">
+                                            @if (editResourceForm.get('name')?.errors?.['required']) { <small>Name is required.</small> }
+                                            @if (editResourceForm.get('name')?.errors?.['minlength']) { <small>Min 3 chars.</small> }
+                                            @if (editResourceForm.get('name')?.errors?.['maxlength']) { <small>Max 100 chars.</small> }
+                                        </div>
+                                    }
+                                </form>
+                                @if (resourcesErrorMessage && editingResourceId === resource.id) {
+                                    <div class="error-message global-error item-error" style="width:100%; margin-top: 5px;">{{ resourcesErrorMessage }}</div>
+                                }
+                            }
+                            @if (editingResourceId !== resource.id) {
+                                <div class="item-info">
+                                    <h3>{{ resource.name }}</h3>
+                                </div>
+                                <div class="actions">
+                                    <button (click)="startEditResourceName(resource)" class="button-small button-edit" [disabled]="isAddingResource || !!editingResourceId">Edit Name</button>
+                                    <button (click)="deleteResource(resource.id!, resource.name)" class="button-small delete-button" [disabled]="isAddingResource || !!editingResourceId || isDeletingResource(resource.id!)">
+                                        {{ isDeletingResource(resource.id!) ? 'Deleting...' : 'Delete' }}
+                                    </button>
+                                    <button
+                                            [routerLink]="['/services', serviceId, 'resources', resource.id!, 'manage-owners']"
+                                            class="button-small button-manage-owners"
+                                            [disabled]="isAddingResource || !!editingResourceId">
+                                        Manage Owners ({{ resource.owners.length }})
+                                    </button>
+                                </div>
+                            }
+                        </li>
+                    }
+                </ul>
+            }
+            @if (!isLoadingResources && !resourcesErrorMessage && (!resources || resources.length === 0) && !editingResourceId) {
+                <p class="empty-message">No resources for this service. Click '+ Add New Resource' to start.</p>
+            }
+        }
+    } <hr>
+    <button type="button" (click)="goBackToServiceList()" class="button-secondary">Back to View/Manage Services</button>
+</div>
