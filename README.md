@@ -10,7 +10,10 @@ Before you begin, ensure you have the following installed:
     ```bash
     npm install -g @angular/cli
     ```
-* **Running Backend:** The Spring Boot backend application must be running and accessible. By default, this frontend expects the backend to be available at `http://localhost:8080`.
+* **Starting Spring Boot API:** This frontend application requires the companion Spring Boot backend to be running and accessible.
+    * **Backend Repository:** [Swisscom Spring Boot Backend](https://github.com/alekspetrovv/swisscom-java)
+    * **Setup Instructions:** Please refer to the `README.md` file within the backend repository for detailed instructions on how to set up and run the backend application.
+    * By default, this frontend expects the backend to be available at `http://localhost:4005` (as per `proxy.conf.json`). Ensure the backend is running on the port the proxy is configured to target.
 
 ## Setup and Installation
 
