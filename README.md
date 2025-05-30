@@ -62,7 +62,7 @@ If your backend runs on a different port or host, you'll need to update the `tar
     ng serve -o
     ```
     * The `-o` flag will automatically open your default web browser to `http://localhost:4200/`.
-    * The application will automatically reload if you change any of Předpokládám, že máte na mysli "zdrojové soubory" (source files).
+    * The application will automatically reload if you change any of the (source files).
 
 Alternatively, you can use the provided bash script:
 ```bash
