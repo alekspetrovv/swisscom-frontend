@@ -36,7 +36,7 @@ echo ""
 
 echo "Starting Angular development server..."
 echo "The application will be available at http://localhost:4200/ (this may open in your browser)."
-echo "Ensure your Spring Boot backend is running (typically on http://localhost:8080) for API calls."
+echo "Ensure your Spring Boot backend is running (typically on http://localhost:4005) for API calls."
 echo "Press Ctrl+C to stop the Angular server when you are done."
 echo ""
 
