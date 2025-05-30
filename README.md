@@ -33,13 +33,13 @@ Before you begin, ensure you have the following installed:
 
 The frontend is configured to connect to the backend API via a proxy to avoid CORS issues during local development.
 * The base API URL used by the Angular `ApiService` is `/api`.
-* This path is proxied to `http://localhost:8080` (your Spring Boot backend) using the `proxy.conf.json` file located in the root of this Angular project.
+* This path is proxied to `http://localhost:4005` (your Spring Boot backend) using the `proxy.conf.json` file located in the root of this Angular project.
 
   **`proxy.conf.json`:**
     ```json
     {
       "/api": {
-        "target": "http://localhost:8080",
+        "target": "http://localhost:4005",
         "secure": false,
         "changeOrigin": true
       }
