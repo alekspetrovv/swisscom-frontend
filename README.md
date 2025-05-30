@@ -1,59 +1,77 @@
-# Swisscom
+# Swisscom Service Management - Angular Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.0.
+This project is the Angular frontend for the Swisscom Service CRUD application. It allows users to manage Services, and their nested Resources and Owners.
 
-## Development server
+## Prerequisites
 
-To start a local development server, run:
+Before you begin, ensure you have the following installed:
+* **Node.js and npm:** Node.js version 18.x or 20.x is recommended. npm is included with Node.js. You can download it from [nodejs.org](https://nodejs.org/).
+* **Angular CLI:** Install it globally if you haven't already:
+    ```bash
+    npm install -g @angular/cli
+    ```
+* **Running Backend:** The Spring Boot backend application must be running and accessible. By default, this frontend expects the backend to be available at `http://localhost:8080`.
 
+## Setup and Installation
+
+1.  **Clone the repository** (if you haven't already):
+    ```bash
+    git clone <your-angular-frontend-repo-url>
+    cd <your-angular-frontend-project-directory>
+    ```
+
+2.  **Install dependencies:**
+    Navigate to the project directory and run:
+    ```bash
+    npm install
+    ```
+    (If you prefer yarn: `yarn install`)
+
+## Configuration
+
+### API Backend URL
+
+The frontend is configured to connect to the backend API via a proxy to avoid CORS issues during local development.
+* The base API URL used by the Angular `ApiService` is `/api`.
+* This path is proxied to `http://localhost:8080` (your Spring Boot backend) using the `proxy.conf.json` file located in the root of this Angular project.
+
+  **`proxy.conf.json`:**
+    ```json
+    {
+      "/api": {
+        "target": "http://localhost:8080",
+        "secure": false,
+        "changeOrigin": true
+      }
+    }
+    ```
+* This proxy configuration is automatically used when you run `ng serve` because it should be referenced in your `angular.json` file under `projects -> [your-project-name] -> architect -> serve -> options -> proxyConfig`.
+
+If your backend runs on a different port or host, you'll need to update the `target` in `proxy.conf.json`.
+
+### Environment Files
+* `src/environments/environment.ts`: For general development settings (uses the proxy).
+* `src/environments/environment.prod.ts`: For production builds, you would typically set the full backend API URL here.
+
+## Running the Application (Development Mode)
+
+1.  **Ensure the Spring Boot backend application is running.**
+2.  **Start the Angular development server:**
+    From the root of the Angular project directory, run:
+    ```bash
+    ng serve -o
+    ```
+    * The `-o` flag will automatically open your default web browser to `http://localhost:4200/`.
+    * The application will automatically reload if you change any of Předpokládám, že máte na mysli "zdrojové soubory" (source files).
+
+Alternatively, you can use the provided bash script:
 ```bash
-ng serve
+./run-frontend.sh
 ```
+(Make sure the script is executable: `chmod +x run-frontend.sh`)
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Building for Production
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
+To create a production build:
 ```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+ng build --configuration production
