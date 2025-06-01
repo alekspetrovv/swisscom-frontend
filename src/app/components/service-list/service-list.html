@@ -1,7 +1,7 @@
 <div class="container">
-  <div class="section-header"> <h2>View/Manage Services</h2>
+  <div class="section-header"> <h2>Manage Services</h2>
     @if (!isAddingService && !editingServiceId) {
-      <button type="button" (click)="startAddService()" class="button-add-item"> + Create New Service
+      <button type="button" (click)="startAddService()" class="button-add-item"> + Add New Service
       </button>
     }
   </div>
@@ -56,8 +56,8 @@
         <div class="service-info"> <h3>{{ service.name  }}</h3>
         </div>
         <div class="actions">
-          <button (click)="startEditServiceName(service)" class="button-small" [disabled]="isAddingService || !!editingServiceId">Edit Name</button>
-          <button (click)="manageResources(service.id)" class="button-small" [disabled]="isAddingService || !!editingServiceId">View/Manage Resources</button>
+          <button (click)="startEditServiceName(service)" class="button-small" [disabled]="isAddingService || !!editingServiceId">Edit</button>
+          <button (click)="manageResources(service.id)" class="button-small" [disabled]="isAddingService || !!editingServiceId">Manage Resources</button>
           <button (click)="confirmDelete(service.id)" class="button-small delete-button" [disabled]="isAddingService || !!editingServiceId || isDeleting(service.id)">
             {{ isDeleting(service.id) ? 'Deleting...' : 'Delete' }}
           </button>

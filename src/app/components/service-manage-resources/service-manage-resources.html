@@ -3,7 +3,7 @@
         <p class="loading-message">Loading service information...</p>
     }
     @if (!isLoadingService && parentService) {
-        <h2>View/Manage Resources</h2>
+        <h2>Manage Resources</h2>
         <p class="text-muted medium">Service: {{ parentService.name }}</p>
     }
     @if (!isLoadingService && !parentService && serviceErrorMessage) {
@@ -93,7 +93,7 @@
                                     <h3>{{ resource.name }}</h3>
                                 </div>
                                 <div class="actions">
-                                    <button (click)="startEditResourceName(resource)" class="button-small button-edit" [disabled]="isAddingResource || !!editingResourceId">Edit Name</button>
+                                    <button (click)="startEditResourceName(resource)" class="button-small button-edit" [disabled]="isAddingResource || !!editingResourceId">Edit</button>
                                     <button (click)="deleteResource(resource.id!, resource.name)" class="button-small delete-button" [disabled]="isAddingResource || !!editingResourceId || isDeletingResource(resource.id!)">
                                         {{ isDeletingResource(resource.id!) ? 'Deleting...' : 'Delete' }}
                                     </button>
@@ -114,5 +114,5 @@
             }
         }
     } <hr>
-    <button type="button" (click)="goBackToServiceList()" class="button-secondary">Back to View/Manage Services</button>
+    <button type="button" (click)="goBackToServiceList()" class="button-secondary">Back to Manage Services</button>
 </div>

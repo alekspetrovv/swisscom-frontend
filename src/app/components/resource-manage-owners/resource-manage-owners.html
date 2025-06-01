@@ -2,7 +2,7 @@
   @if (isLoadingParentService || isLoadingParentResource) {
     <p class="loading-message">Loading parent information...</p>
   } @else if (parentService && parentResource) {
-    <h2>View/Manage Owners</h2>
+    <h2>Manage Owners</h2>
     <p class="text-muted medium">Service: {{ parentService.name }}</p>
     <p class="text-muted medium">Resource: {{ parentResource.name }}</p>
   } @else if (parentDataErrorMessage) {
@@ -135,5 +135,5 @@
     <p>Cannot manage owners as parent service or resource details could not be loaded.</p>
   }
   <hr>
-  <button type="button" (click)="goBackToManageResources()" class="button-secondary">Back to View/Manage Resources</button>
+  <button type="button" (click)="goBackToManageResources()" class="button-secondary">Back to Manage Resources</button>
 </div>
