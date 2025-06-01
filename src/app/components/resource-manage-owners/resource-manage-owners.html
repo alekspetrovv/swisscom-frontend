@@ -119,7 +119,7 @@
                 <p class="text-muted medium">Account: {{ owner.accountNumber }} | Level: {{ owner.level }}</p>
               </div>
               <div class="actions">
-                <button (click)="startEditOwner(owner)" class="button-small" [disabled]="isAddingOwner || !!editingOwnerId">Edit</button>
+                <button (click)="startEditOwner(owner)" class="button-small button-edit" [disabled]="isAddingOwner || !!editingOwnerId">Edit</button>
                 <button (click)="deleteOwner(owner)" class="button-small delete-button" [disabled]="isAddingOwner || !!editingOwnerId || isDeletingOwner(owner.id!)">
                   {{ isDeletingOwner(owner.id!) ? 'Deleting...' : 'Delete' }}
                 </button>

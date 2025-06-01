@@ -210,20 +210,26 @@ button:disabled {
   color: #212529;
   border: none;
 }
-.delete-button {
+
+.actions .delete-button {
   background-color: #dc3545;
   color: white;
   border: none;
 }
-.button-manage-owners {
-  border: 1px solid #6c757d;
-  color: #6c757d;
-  background-color: transparent;
+.actions .delete-button:hover:not(:disabled) {
+  background-color: #c82333;
 }
-.button-manage-owners:hover:not(:disabled) {
-  background-color: #6c757d;
+
+.actions .button-edit {
+  background-color: #007bff;
   color: white;
+  border-color: #007bff;
 }
+.actions .button-edit:hover:not(:disabled) {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
 .button-secondary {
   background-color: #6c757d;
   color: white;
